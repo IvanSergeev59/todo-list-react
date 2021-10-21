@@ -39,7 +39,7 @@ export default class App extends Component  {
       })
     }
 
-    addItem =(item) => {
+    onItemAdded =(item) => {
       this.setState(({todoData})=> {        
         
         const newLabel = this.createTodoItem(item)
@@ -95,26 +95,26 @@ export default class App extends Component  {
     
 
     render () {
-      
-      const done = this.state.todoData.filter((el)=> el.done).length;
-      const todo = this.state.todoData.length-done
+      const{todoData} = this.state
+      const doneCount = todoData.filter((el)=> el.done).length;
+      const todoCount = todoData.length - doneCount
     
       return (
         <div className="todo-app">
-          <AppHeader done={done} toDo = {todo}
+          <AppHeader doneCount={doneCount} todoCount = {todoCount}
            />
           <div className="top-panel d-flex">
             <SearchPanel />
             <ItemStatusFilter />
           </div>
 
-          <TodoList todos={this.state.todoData}
+          <TodoList todos={todoData}
           onDeleted={ this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone} />
           <div className= "todo-add-item-block">
             <TodoAddItemBlock
-            addItem = {this.addItem} />
+            onItemAdded = {this.onItemAdded} />
           </div>
         </div>
       );
